@@ -1,0 +1,43 @@
+# docker-compose.yml
+
+version: '3.8'
+
+networks:
+  rb_network:
+    name: rb_network
+    driver: bridge
+
+services:
+  fastapi:
+    container_name : reelblend_app
+    build: .
+    # command: bash -c 'until nc -z postgres 5432; do sleep 1; done; uvicorn app.main:app --host 0.0.0.0'
+    command: bash -c 'python -m uvicorn app.main:app --host 0.0.0.0 --reload'
+    volumes:
+      - .:/app
+    ports:
+      - 0.0.0.0:8000:8000
+      # - target: 8001
+      #   published: 8001
+    environment:
+      - DATABASE_URL=postgresql://postgres:root123@db:5432/reelblend
+      
+    depends_on:
+      - db
+    networks:
+      - rb_network
+
+
+  db:
+    container_name : reelblend_db
+    image: postgres
+    volumes:
+      - ./POSTGRES_DATA:/var/lib/postgresql/data/
+    ports:
+      - 5432
+    environment:
+      POSTGRES_DB: reelblend
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root123
+    networks:
+      - rb_network
