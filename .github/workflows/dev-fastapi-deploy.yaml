@@ -18,9 +18,14 @@ jobs:
     permissions:
         id-token: write
         contents: read
+
     steps:
+      - name: 'Test secret variable'
+        run: |
+            echo ${{ secrets.API_CONTAINER_NAME }} 
+
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
