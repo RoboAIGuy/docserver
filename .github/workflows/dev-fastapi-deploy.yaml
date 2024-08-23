@@ -8,17 +8,27 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+        applicationfolder: ''
+        CI: false
+        ECS_SERVICE: ${{ secrets.ECS_SERVICE_NAME }}   # name of the service
+        ECS_CLUSTER: ${{ secrets.ECS_CLUSTER_NAME }}   # name of the cluster
+        ECS_TASK_DEFINITION: ${{ secrets.ECS_TASKDEF }} 
+        CONTAINER_NAME: ${{ secrets.API_CONTAINER_NAME }}
+    permissions:
+        id-token: write
+        contents: read
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
       - name: Configure AWS credentials
-           uses: aws-actions/configure-aws-credentials@v4
-           with:
-              aws-region: ap-southeast-1
-              role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
-              role-duration-seconds: 1200
-              role-session-name: DevSession
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ap-southeast-1
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          role-duration-seconds: 1200
+          role-session-name: DevSession
 
       - name: Login to Amazon ECR
         id: login-ecr
@@ -31,15 +41,15 @@ jobs:
           IMAGE_TAG: ${{ github.sha }}
           ECR_REPOSITORY: ${{ secrets.ECR_REPO }}
         run: |
-        docker-compose up --build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-        echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+          docker-compose up --build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
 
       - name: Get current task definition
         run: >
-        aws ecs describe-task-definition
-        --task-definition ${{ secrets.ECS_TASK_FAMILY }} --region ${{ secrets.APP_AWS_REGION }} --query 'taskDefinition'
-        > task-definition.json
+          aws ecs describe-task-definition
+          --task-definition ${{ secrets.ECS_TASK_FAMILY }} --region ${{ secrets.APP_AWS_REGION }} --query 'taskDefinition'
+          > task-definition.json
 
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def

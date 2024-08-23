@@ -20,8 +20,5 @@ COPY ./templates /reelblend/templates
 
 # ENV PYTHONPATH = /code
 
-# make directories for uploads
-# RUN  mkdir -p /uploads/depots /uploads/suppliers
-
 # run the FastAPI server
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

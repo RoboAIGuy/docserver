@@ -165,3 +165,4 @@ POSTGRES_DATA/*
 UPLOADS/*
 app/__pycache__
 /dev_req.txt
+.DS_Store
