@@ -1,4 +1,4 @@
-# ReelBlend - Vision Engine
+# DocServer - Document management Engine
 
 This repository contains Python webserver containing a FastAPI engine to create and manage documents.
 
