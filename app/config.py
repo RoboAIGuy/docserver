@@ -17,36 +17,15 @@ API_V1_STR = "/api/v1"
 
 ########################################## APP DESCRIPTION FOR OPEN API #########################################
 app_description = """
-ReelBlend - This system does end-to-end analysis of videos provided by users tracking. 🚀 Developed using [FastAPI](https://fastapi.tiangolo.com/) by Devs@ReelBlend.
+DocServer - This system does end-to-end management of documents created by users. 🚀 Developed using [FastAPI](https://fastapi.tiangolo.com/) by Kaustuv Sarkar.
 
-# This API module consists of the following parts:
-    1. Video Segmentation Analysis.
-    2. Video Lighting Analysis.
-    3. Upload and Download of Analyzed filed.
-    4. Video Analysis Status query.
-    4. Other utility APIs.
+# This API suite consists of the following parts:
+    1. User management.
+    2. Document management.
+    3. Permissions Management.
 """
 
 ###################################### END OF APP DESCRIPTION FOR OPEN API ######################################
-
-
-########################################## API TAG METADATA DECLARATION #########################################
-
-"""
-    Metadata for tags
-"""
-tags_metadata = [
-    {
-        "name": "Video",
-        "description": "APIs to handle Video Analysis - Segmentation, Lighting, Plane Detections, etc.",
-        # "externalDocs": {
-        #     "description": "Segmentation docs",
-        #     "url": "",
-        # },
-    },
-]
-
-##################################### END OF API TAG METADATA DECLARATION #######################################
 
 
 ############################################## CORS ORIGIN SETTINGS #############################################
@@ -57,17 +36,6 @@ origins = [ "https://localhost"
 ]
 
 ########################################## END OF CORS ORIGIN SETTINGS ##########################################
-
-
-
-
-
-############################################### FILE PATH SETTINGS ##############################################
-"""
-File Upload settings dictionary
-"""
-
-############################################ END OF FILE PATH SETTINGS ##########################################
 
 
 ################################################ DATABASE SETTINGS ##############################################
@@ -86,7 +54,7 @@ settings = Settings()
 class LogConfig(BaseModel):
     """Logging configuration to be set for the server"""
 
-    LOGGER_NAME: str = "ReelBlendCVAdmin"
+    LOGGER_NAME: str = "DocServerAdmin"
     LOG_FORMAT: str = "%(levelprefix)s | %(asctime)s | %(message)s"
     LOG_LEVEL: str = "DEBUG"
 
@@ -108,7 +76,7 @@ class LogConfig(BaseModel):
         },
     }
     loggers = {
-        "ReelBlendCVAdmin": {"handlers": ["default"], "level": LOG_LEVEL},
+        "DocServerAdmin": {"handlers": ["default"], "level": LOG_LEVEL},
     }
     
 ########################################### END OF LOGGER SETTINGS ##############################################

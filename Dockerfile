@@ -2,21 +2,20 @@
 FROM python:3.9
 
 # set working directory
-WORKDIR /reelblend
+WORKDIR /docserver
 
 # set env variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 # copy to docker cache
-COPY ./requirements.txt /reelblend/requirements.txt
+COPY ./requirements.txt /docserver/requirements.txt
 
 # install all requirements
-RUN pip install --no-cache-dir --upgrade -r /reelblend/requirements.txt
+RUN pip install --no-cache-dir --upgrade -r /docserver/requirements.txt
 
 # copy codebase to working directory
-COPY ./app /reelblend/app
-COPY ./templates /reelblend/templates
+COPY ./app /docserver/app
 
 # ENV PYTHONPATH = /code
 

@@ -1,8 +1,8 @@
 from fastapi import APIRouter
 
-# from app.api.API_v1.Endpoints import Users
-from app.api.API_v1.Endpoints import Video
-
+from app.api.API_v1.Endpoints import User
+from app.api.API_v1.Endpoints import Document
+from app.api.API_v1.Endpoints import Permission
 
 
 
@@ -10,5 +10,6 @@ from app.api.API_v1.Endpoints import Video
 api_router = APIRouter()
 
 # Routers
-# api_router.include_router(Users.router, prefix="/products", tags=["Products"])
-api_router.include_router(Video.router, prefix="/Video", tags=["Video"])
+api_router.include_router(User.router, prefix="/User", tags=["User"])
+api_router.include_router(Document.router, prefix="/Document", tags=["Document"])
+api_router.include_router(Permission.router, prefix="/Permission", tags=["Permission"])

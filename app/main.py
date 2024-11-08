@@ -26,10 +26,9 @@ from app.api.API_v1.Api import api_router
 
 # App declaration
 app = FastAPI(  
-                title = "Computer Vision enabled Backend for ReelBlend",
+                title = "This is a demo document server made for an assignment for Chronicle.",
                 description = config.app_description,
                 version = "1.0.0",
-                openapi_tags = config.tags_metadata,
                 openapi_url="/api/v1/openapi.json",
                 swagger_ui_parameters={"defaultModelsExpandDepth": -1}
             )
@@ -54,11 +53,6 @@ app.add_middleware(
 START OF FASTAPI API DEFINITIONS
 The standard FastAPI path operations code.
 """
-
-# TEST BASE URL API (insecure/test)
-@app.get("/", status_code=200)
-def sanity():
-    return {"message": "I Am Alive"}
 
 @app.get("/health", status_code=200)
 def dummy_health_for_deployment():
