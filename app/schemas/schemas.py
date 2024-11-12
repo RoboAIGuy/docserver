@@ -43,6 +43,7 @@ class DocumentUpdate(BaseModel):
     creator: EmailStr
     title: Optional[str] = None
     content: Optional[str] = None
+    public: Optional[bool]
     
     class Config:
         orm_mode = True

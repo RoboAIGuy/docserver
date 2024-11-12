@@ -135,6 +135,8 @@ class Document(Base):
         try:
             db_document = db.query(Document).filter(Document.title == DocumentUpdate.title).first()
             db_document.content = DocumentUpdate.content
+            if DocumentUpdate.public is not None:
+                db_document.public = DocumentUpdate.public
             db_document.updated_at = func.now()
             db.commit()
             db.refresh(db_document)
