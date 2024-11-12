@@ -88,7 +88,7 @@ class User(Base):
             db.commit()
             db.refresh(db_user)
             logger.debug(f"User with email - {email} has been deleted")
-            return {"msg" : "User deletion successful"}
+            return db_user
 
         except SQLAlchemyError as e:
             error = str(e) # or error = str(e.orig) works as well

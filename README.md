@@ -26,8 +26,22 @@ This repository contains Python webserver containing a FastAPI engine to create 
 - Run Docker Engine
 - Open terminal/cmd
 - Create a Docker Network
+  ```bash
+  docker network create docnetwork
+  ```
+
 - Run the containers
-- Open the following in your browser '0.0.0.0:8000/docs'
+  ```bash
+  docker-compose up -d --build
+  ```
+
+- To get into the Swagger docs open the following in your browser '0.0.0.0:8000/docs'
+
+- To run tests use the following command
+  ```bash
+  docker exec -it docserver_app pytest app/tests/
+  ```
+
 
 
 ### Backend

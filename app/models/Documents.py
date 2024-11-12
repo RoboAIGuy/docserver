@@ -151,7 +151,7 @@ class Document(Base):
     """
     DELETE AN EXISTING DOCUMENT
     """
-    def delete_document_by_title(db: Session, title: str, email: str):
+    def delete_document_by_title(db: Session, title: str):
         try:
             db_code = db.query(Document).filter(Document.title == title).delete(synchronize_session="fetch")
             db.commit()

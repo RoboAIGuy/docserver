@@ -103,10 +103,10 @@ def get_documents_by_user_email(email: str, db: Session = Depends(get_db)):
     return db_return
 
 
-# API to delete a document by title
+# API to delete a document
 @router.delete("/delete-document")
 def delete_document_by_title(document: schemas.DocumentDelete = Body(...), db: Session = Depends(get_db)):
-    db_present = Document.get_document_by_user_and_title(db, user=document.creator, title=document.title)
+    db_present = Document.get_document_by_user_and_title(db, email=document.creator, title=document.title)
     if db_present is None:
         raise HTTPException(status_code=404, detail=f"Document with title - {document.title} for user - '{document.email}' not found")
     doc_permissions = Permission.get_document_permissions(db, email=document.creator, title=document.title)
