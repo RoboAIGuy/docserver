@@ -119,3 +119,24 @@ class Permission(Base):
             db.rollback()
             logger.error(error)
             return error
+        
+        
+        
+    """
+    DELETE ALL EXISTING PERMISSIONS FOR A DOCUMENT (USE WHEM DOC IS DELETED)
+    """        
+    def delete_entry_by_user_and_title(db: Session, title: str, creator: str):
+        try:
+            # delete all entries in permission table filtering based on title and creator
+             
+            db_code = db.query(Permission).filter(Permission.document_title == title).delete(synchronize_session="fetch")
+            db.commit()
+            db.refresh(db_code)
+            logger.debug(f"Permission with ID - {id} has been deleted")
+            return(db_code)
+
+        except SQLAlchemyError as e:
+            error = str(e)
+            db.rollback()
+            logger.error(error)
+            return error

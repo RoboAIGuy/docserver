@@ -1,5 +1,4 @@
 import pytest
-import requests
 
 from fastapi.testclient import TestClient
 
@@ -10,7 +9,7 @@ client = TestClient(app)
 @pytest.fixture
 def temporary_user():
     user_data = {
-        "email": "deadpoolwolverine@example.com",
+        "email": "deadpoolwolverinecaptainamerica@example.com",
         "password": "chimichangas4life",
         "name": "Dead Pool Wolverine"
     }
@@ -23,7 +22,7 @@ def temporary_user():
 
 def test_create_document_not_public(temporary_user):
     response = client.post(
-        "api/v1//Document/create-document",
+        "api/v1/Document/create-document",
         json={
             "title": "Test Document", 
             "content": "This is a test document",
@@ -37,20 +36,20 @@ def test_create_document_not_public(temporary_user):
     
     
 def test_get_all_documents():
-    response = client.get("api/v1//Document/get-all-documents")
+    response = client.get("api/v1/Document/get-all-documents")
     assert response.status_code == 200
     assert any(d['title'] == 'Test Document' for d in response.json()) == True
     
     
 def test_get_document_by_title():
-    response = client.get("api/v1//Document/get-document-by-title/Test Document")
+    response = client.get("api/v1/Document/get-document-by-title/Test Document")
     assert response.status_code == 200
     assert response.json()["title"] == "Test Document"
     assert response.json()["content"] == "This is a test document"
     
     
 def get_document_by_user(temporary_user):
-    response = client.get(f"api/v1//Document/get-document-by-user/{temporary_user}")
+    response = client.get(f"api/v1/Document/get-document-by-user/{temporary_user}")
     assert response.status_code == 200
     assert any(d['title'] == 'Test Document' for d in response.json()) == True
     

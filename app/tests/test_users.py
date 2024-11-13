@@ -7,7 +7,7 @@ client = TestClient(app)
 
 def test_create_user():
     response = client.post(
-        "api/v1/User/create",
+        "/api/v1/User/create",
         json={
             "email": "deadpool@example.com", 
             "password": "chimichangas4life",
@@ -24,13 +24,13 @@ def test_create_user():
     
     
 def test_get_all_users():
-    response = client.get("api/v1/User/get-all-users")
+    response = client.get("/api/v1/User/get-all-users")
     assert response.status_code == 200
     assert any(d['email'] == 'deadpool@example.com' for d in response.json()) == True
     
     
 def test_get_user_by_email():
-    response = client.get("api/v1/User/get-user-by-email/deadpool@example.com")
+    response = client.get("/api/v1/User/get-user-by-email/deadpool@example.com")
     assert response.status_code == 200
     assert response.json() == {
         "email": "deadpool@example.com",
@@ -42,7 +42,7 @@ def test_get_user_by_email():
       
     
 def test_delete_user():
-    response = client.delete("api/v1/User/delete/deadpool@example.com")
+    response = client.delete("/api/v1/User/delete/deadpool@example.com")
     assert response.status_code == 200
     assert response.json() == {
         "msg" : "User deletion successful"

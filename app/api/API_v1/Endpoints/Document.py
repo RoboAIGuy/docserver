@@ -114,6 +114,7 @@ def delete_document_by_title(document: schemas.DocumentDelete = Body(...), db: S
       db_return = Document.delete_document_by_title(db, title=document.title)
       if db_return is None:
           raise HTTPException(status_code=404, detail=f"Document with title - '{document.title}' not found")
+      Permission.delete_entry_by_user_and_title(db, title=document.title, creator=document.creator)
       return {"msg" : f"Document with title - '{document.title}' has been deleted"}
      
 ################################################# END OF CODE APIs #######################################################
